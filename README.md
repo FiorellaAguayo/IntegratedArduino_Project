@@ -24,6 +24,6 @@ Además, se ha implementado la capacidad de alternar entre dos modos de funciona
 Link al proyecto: https://www.tinkercad.com/things/gGwuJEx9xTq
 
 # Integración de Motor de CC
-
+![Tercera parte](https://github.com/FiorellaAguayo/TP_SPD/blob/main/im%C3%A1genes/motorcc.png)
 El motor de CC se integra en el proyecto para indicar visualmente si estás en el modo de números o en el modo de números primos, dependiendo de la posición del interruptor. Cuando el interruptor se encuentra en el lado de números, el motor se detiene, y cuando está en el lado de números primos, el motor gira.
 
