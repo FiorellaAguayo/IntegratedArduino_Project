@@ -8,26 +8,37 @@
 
 #define UNIDAD A4
 #define DECENA A5
-
-#define RESET 4
+#define INTERRUPTOR 4
 #define AUMENTA 3
 #define DISMINUYE 2
+#define SENSOR A0
 
 int contador = 0;
-int estadoResetAnterior = HIGH;
 int estadoAumentarAnterior = HIGH;
 int estadoDisminuirAnterior = HIGH;
+int temperatura;
+int lecturaSensor;
 
-void setup()
+void setup() 
 {
   initializePins();
   Serial.begin(9600);
 }
 
-void loop()
+void loop() 
 {
-  handleButtons();
+  int lecturaInterruptor = digitalRead(INTERRUPTOR); 
+  switch(lecturaInterruptor) 
+  {
+    case 0:
+      handleButtons();
+      break;
+    case 1:
+      handlePrimeButtons();
+      break;
+  }
   displayNumber(contador);
+  Serial.println(temperatura);
 }
 
 /*
@@ -44,39 +55,87 @@ void initializePins()
   pinMode(G, OUTPUT);
   pinMode(UNIDAD, OUTPUT);
   pinMode(DECENA, OUTPUT);
-  pinMode(RESET, INPUT_PULLUP);
+  pinMode(INTERRUPTOR, INPUT);
   pinMode(AUMENTA, INPUT_PULLUP);
   pinMode(DISMINUYE, INPUT_PULLUP);
 }
 
 /*
-    Esta función lee el estado de los botones y realiza acciones en función de su estado.
-    Si se presiona el boton RESET reestablece el contador a 0. 
+    Esta función lee el estado de los botones y realiza acciones en función de su estado. 
     Si se presiona el boton AUMENTA, aumenta el contador. 
     Si se presiona el boton DISMINUYE, disminuye el contador.
 */
 void handleButtons() 
 {
-  int lecturaReset = digitalRead(RESET);
   int lecturaAumentar = digitalRead(AUMENTA);
   int lecturaDisminuir = digitalRead(DISMINUYE);
+  lecturaSensor = analogRead(SENSOR);
+  temperatura = map(lecturaSensor, 20, 358, -40, 125);
 
-  if(lecturaReset == LOW && estadoResetAnterior == HIGH)
+  if(lecturaAumentar == LOW && estadoAumentarAnterior == HIGH) 
   {
-    contador = 0;
-  } 
-  else if(lecturaAumentar == LOW && estadoAumentarAnterior == HIGH) 
-  {
-	actualizarContador(1);
+    updateCounter(1);
   } 
   else if(lecturaDisminuir == LOW && estadoDisminuirAnterior == HIGH) 
   {
-    actualizarContador(-1);
+    updateCounter(-1);
   }
 
-  estadoResetAnterior = lecturaReset;
   estadoAumentarAnterior = lecturaAumentar;
   estadoDisminuirAnterior = lecturaDisminuir;
+}
+
+/*
+    Esta función lee el estado de los botones y realiza acciones en función de su estado. 
+    Si se presiona el boton AUMENTA, aumenta el contador en números primos. 
+    Si se presiona el boton DISMINUYE, disminuye el contador en números primos.
+*/
+void handlePrimeButtons() 
+{
+  int lecturaAumentar = digitalRead(AUMENTA);
+  int lecturaDisminuir = digitalRead(DISMINUYE);
+  lecturaSensor = analogRead(SENSOR);
+  temperatura = map(lecturaSensor, 20, 358, -40, 125);
+
+  if(lecturaAumentar == LOW && estadoAumentarAnterior == HIGH) 
+  {
+    do 
+    {
+      updateCounter(1);
+    }while(!isPrime(contador));
+  } 
+  else if(lecturaDisminuir == LOW && estadoDisminuirAnterior == HIGH) 
+  {
+    do 
+    {
+      updateCounter(-1);
+    } while(!isPrime(contador));
+  }
+
+  estadoAumentarAnterior = lecturaAumentar;
+  estadoDisminuirAnterior = lecturaDisminuir;
+}
+
+/*
+    Esta función verifica si un número dado es primo o no.
+    number: El número que se va a comprobar si es primo.
+    Retorna 1 si el número es primo, 0 si no lo es.
+*/
+int isPrime(int number) 
+{
+  if(number <= 1) 
+  {
+    return 0;
+  }
+  
+  for(int i = 2; i * i <= number; i++) 
+  {
+    if(number % i == 0) 
+    {
+      return 0;
+    }
+  }
+  return 1;
 }
 
 /*
@@ -85,13 +144,13 @@ void handleButtons()
     Modifica el contador según el valor de cambio.
     Se asegura de que el contador se encuentre en el rango de 0-99.
 */
-void updateCounter(int cambio) 
+void updateCounter(int change) 
 {
-  contador += cambio;
+  contador += change;
   if(contador > 99) 
   {
     contador = 0;
-  }
+  } 
   else if(contador < 0) 
   {
     contador = 99;
@@ -112,13 +171,11 @@ void displayNumber(int number)
   digitalWrite(DECENA, HIGH);
   printDigit(unidades);
   digitalWrite(UNIDAD, LOW);
-
   delay(1);
 
   digitalWrite(UNIDAD, HIGH);
   printDigit(decenas);
   digitalWrite(DECENA, LOW);
-
   delay(1);
 }
 
