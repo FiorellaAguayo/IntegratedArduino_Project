@@ -8,13 +8,13 @@
 ![Primera parte](https://github.com/FiorellaAguayo/TP_SPD/blob/main/im%C3%A1genes/pt1.png)
 # Descripción
 Este proyecto es un contador de dos dígitos con funcionalidad de RESET, AUMENTO y DISMINUCIÓN, lo que lo convierte en una solución práctica para contar o llevar un seguimiento de eventos en un rango de 0 a 99.
-Link al proyecto: https://www.tinkercad.com/things/8URVrA52UOG?sharecode=sZ9_A_eOY5HujihPn9Owp_psy2D6dKnyE5omg-PGx_8
+Link al proyecto: https://www.tinkercad.com/things/8URVrA52UOG
 
 # Segunda Parte
 ![Segunda parte](https://github.com/FiorellaAguayo/TP_SPD/blob/main/im%C3%A1genes/pt2.png)
 # Descripción
 Este proyecto tiene un contador de dos dígitos con dos modos de funcionamiento: uno normal y otro que solo permite cambios en números primos. Además, muestra la temperatura ambiente medida por un sensor de temperatura en el monitor serial, que se podrá utilizar más adelante.
-Link al proyecto: https://www.tinkercad.com/things/3dotxTZC7x6?sharecode=wxjSIpxW7LNtFOQhsBK1-odUE9bjxGI4FGFthiVfDKM
+Link al proyecto: https://www.tinkercad.com/things/3dotxTZC7x6
 
 # Tercera Parte
 ![Tercera parte](https://github.com/FiorellaAguayo/TP_SPD/blob/main/im%C3%A1genes/pt3.png)
