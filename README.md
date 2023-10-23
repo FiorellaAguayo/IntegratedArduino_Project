@@ -1,7 +1,7 @@
 # TP_SPD
 
 # Integrantes
-* Fiorlella Marina Aguayo
+* Fiorella Marina Aguayo
 * Santiago Felipe Cantos
 
 # Primera Parte
@@ -23,4 +23,5 @@ Este proyecto implementa un contador de dos dígitos con un fotodiodo, un sensor
 Además, se ha implementado la capacidad de alternar entre dos modos de funcionamiento utilizando un interruptor deslizante: uno que permite cambios normales en el contador y otro que solo permite cambios en números primos.
 Link al proyecto: https://www.tinkercad.com/things/gGwuJEx9xTq
 
+# Integación de Motor de CC
 
