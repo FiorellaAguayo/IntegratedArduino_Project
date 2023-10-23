@@ -36,9 +36,9 @@ En esta segunda parte se ha agregado una funcionalidad que permite dos modos de 
     * Dos pulsadores: AUMENTA y DISMINUYE.
     * Arduino.
     * Cables y resistencias.
-    Nuevo:
-        * Un interruptor deslizante.
-        * Un sensor de temperatura.
+        - Nuevo:
+            * Un interruptor deslizante.
+            * Un sensor de temperatura.
 
 - Incorporación de interruptor deslizante:
 Permite dos modos de funcionamiento. Cuando el interruptor está en la posición "0", el contador operará de forma común (1 en 1), y cuando está en la posición "1", el contador operará de forma distinta (números primos).
@@ -60,9 +60,9 @@ Este proyecto implementa un contador de dos dígitos con un fotodiodo, un sensor
     * Cables y resistencias.
     * Un interruptor deslizante.
     * Un sensor de temperatura.
-    Nuevo:
-        * LED RGB.
-        * Fotodiodo.
+        - Nuevo:
+            * LED RGB.
+            * Fotodiodo.
 
 - Funcionamiento del Fotodiodo:
 El fotodiodo se utiliza para medir la intensidad de la luz en el entorno. La lectura del fotodiodo se compara con un umbral definido, en este caso, "mitadFotodiodo" (81), que representa un nivel medio de luz ambiente. 
