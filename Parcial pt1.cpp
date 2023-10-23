@@ -11,23 +11,46 @@
 #define INTERRUPTOR 4
 #define AUMENTA 3
 #define DISMINUYE 2
-#define SENSOR A0
+#define SENSOR A1
+#define FOTODIODO A0
+#define LED_ROJO 13
+#define LED_AZUL 12
+#define LED_VERDE 12
 
 int contador = 0;
+int contadorNumerosPrimos = 0;
 int estadoAumentarAnterior = HIGH;
 int estadoDisminuirAnterior = HIGH;
 int temperatura;
 int lecturaSensor;
+int lecturaFotodiodo;
+int mitadFotodiodo = 81;
+int mitadTemperatura = 42;
 
-void setup() 
+void setup()
 {
-  initializePins();
+  pinMode(LED_ROJO, OUTPUT);
+  pinMode(LED_AZUL, OUTPUT);
+  pinMode(LED_VERDE, OUTPUT);
+  pinMode(A, OUTPUT);
+  pinMode(B, OUTPUT);
+  pinMode(C, OUTPUT);
+  pinMode(D, OUTPUT);
+  pinMode(E, OUTPUT);
+  pinMode(F, OUTPUT);
+  pinMode(G, OUTPUT);
+  pinMode(UNIDAD, OUTPUT);
+  pinMode(DECENA, OUTPUT);
+  pinMode(INTERRUPTOR, INPUT);
+  pinMode(AUMENTA, INPUT_PULLUP);
+  pinMode(DISMINUYE, INPUT_PULLUP);
   Serial.begin(9600);
 }
 
-void loop() 
+void loop()
 {
   int lecturaInterruptor = digitalRead(INTERRUPTOR); 
+  handleFotodiodo();
   switch(lecturaInterruptor) 
   {
     case 0:
@@ -42,22 +65,32 @@ void loop()
 }
 
 /*
-    Esta función inicializa y configura los pines del display y los pulsadores como entradas o salidas según su función.
+    Esta función lee el estado del fotodiodo y prende leds según sea el caso. 
+    Si hay más luz y más temperatura, se prende el led amarillo.
+    Si hay menos luz y menos temperatura, se prende el led azul.
+    Si hay más luz y menos temperatura, o visceversa, se prende el led verde.
 */
-void initializePins() 
+void handleFotodiodo() 
 {
-  pinMode(A, OUTPUT);
-  pinMode(B, OUTPUT);
-  pinMode(C, OUTPUT);
-  pinMode(D, OUTPUT);
-  pinMode(E, OUTPUT);
-  pinMode(F, OUTPUT);
-  pinMode(G, OUTPUT);
-  pinMode(UNIDAD, OUTPUT);
-  pinMode(DECENA, OUTPUT);
-  pinMode(INTERRUPTOR, INPUT);
-  pinMode(AUMENTA, INPUT_PULLUP);
-  pinMode(DISMINUYE, INPUT_PULLUP);
+  lecturaFotodiodo = analogRead(FOTODIODO);
+  
+  if(lecturaFotodiodo > mitadFotodiodo && temperatura > mitadTemperatura) 
+  {
+    digitalWrite(LED_ROJO, HIGH);
+    digitalWrite(LED_VERDE, LOW);
+    digitalWrite(LED_AZUL, LOW);
+  }
+  else if(lecturaFotodiodo < mitadFotodiodo && temperatura < mitadTemperatura) {
+    digitalWrite(LED_ROJO, LOW);
+    digitalWrite(LED_VERDE, LOW);
+    digitalWrite(LED_AZUL, HIGH);
+  }
+  else
+  {
+    digitalWrite(LED_ROJO, LOW);
+    digitalWrite(LED_VERDE, HIGH);
+    digitalWrite(LED_AZUL, LOW);
+  }
 }
 
 /*
