@@ -13,7 +13,7 @@
 #define DISMINUYE 2
 #define SENSOR A1
 #define FOTODIODO A0
-#define LED_ROJO 13
+#define LED_AMARILLO 13
 #define LED_AZUL 12
 #define LED_VERDE 12
 
@@ -29,7 +29,7 @@ int mitadTemperatura = 42;
 
 void setup()
 {
-  pinMode(LED_ROJO, OUTPUT);
+  pinMode(LED_AMARILLO, OUTPUT);
   pinMode(LED_AZUL, OUTPUT);
   pinMode(LED_VERDE, OUTPUT);
   pinMode(A, OUTPUT);
@@ -50,14 +50,14 @@ void setup()
 void loop()
 {
   int lecturaInterruptor = digitalRead(INTERRUPTOR); 
-  handleFotodiodo();
+  
   switch(lecturaInterruptor) 
   {
     case 0:
-      handleButtons();
       break;
     case 1:
       handlePrimeButtons();
+      handleFotodiodo();
       break;
   }
   displayNumber(contador);
@@ -76,23 +76,22 @@ void handleFotodiodo()
   
   if(lecturaFotodiodo > mitadFotodiodo && temperatura > mitadTemperatura) 
   {
-    digitalWrite(LED_ROJO, HIGH);
+    digitalWrite(LED_AMARILLO, HIGH);
     digitalWrite(LED_VERDE, LOW);
     digitalWrite(LED_AZUL, LOW);
   }
   else if(lecturaFotodiodo < mitadFotodiodo && temperatura < mitadTemperatura) {
-    digitalWrite(LED_ROJO, LOW);
+    digitalWrite(LED_AMARILLO, LOW);
     digitalWrite(LED_VERDE, LOW);
     digitalWrite(LED_AZUL, HIGH);
   }
   else
   {
-    digitalWrite(LED_ROJO, LOW);
+    digitalWrite(LED_AMARILLO, LOW);
     digitalWrite(LED_VERDE, HIGH);
     digitalWrite(LED_AZUL, LOW);
   }
 }
-
 /*
     Esta función lee el estado de los botones y realiza acciones en función de su estado. 
     Si se presiona el boton AUMENTA, aumenta el contador. 
